@@ -1,63 +1,47 @@
 package io.zipcoder.polymorphism;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Pet {
 
 
-    Scanner input = new Scanner(System.in);
+    private String displayNameandType;
 
     private String name;
+    private String type;
     private int numberOfPet;
 
-    private ArrayList<String> pet;
-    private ArrayList<String> sound = new ArrayList<>(30);
+    private List<String> pet = new ArrayList<>();
+    private List<String> sound = new ArrayList<>();
 
-    private ArrayList<String> hold = new ArrayList<>(30);
+    private List<String> hold = new ArrayList<>();
+
+    private List<String> holdType = new ArrayList<>();
 
 
     public Pet() {
+        displayNameandType = "";
+        type = "";
         name = "";
         numberOfPet = Integer.MAX_VALUE;
 
 
     }
 
-    public Pet(String name) {
+    public Pet(String name, String type, Integer numberOfPet) {
         this.name=name;
+        this.type=type;
+        this.numberOfPet=numberOfPet;
     }
-
 
     public void setName(Scanner name){
         for(int i = 0; i<numberOfPet; i++) {
             this.name = name.next();
-            setNamOfPetHold(hold);
-            setSoundHold(sound);
+            this.pet.add(this.name);
+
         }
-
-    }
-    public void setNamOfPetHold(ArrayList<String> pets){
-            pets.add(this.name);
-            this.pet = pets;
-
-    }
-    public void setSoundHold(ArrayList<String> sounds){
-        Dog x = new Dog();
-        Cat y = new Cat();
-        Hamster v = new Hamster();
-        for(int i = 0; i<pet.size(); i++) {
-            if(pet.get(i).equalsIgnoreCase("Dog")) {
-                sounds.add(x.displaySpeak());
-            } else if(pet.get(i).equalsIgnoreCase("Cat")) {
-                sounds.add(y.displaySpeak());
-            } else if(pet.get(i).equalsIgnoreCase("Hamster")){
-                sounds.add(v.displaySpeak());
-            }
-        }
-        this.sound = sounds;
-
 
     }
 
@@ -65,52 +49,76 @@ public class Pet {
         this.numberOfPet = numberOfPets.nextInt();
     }
 
-
-
-    public void run(){
-
-//        String inputUserPet = "";
-//        System.out.println("How many pets do you have?");
-//        int inputUser = input.nextInt();
-//        System.out.println("What kind of pet? If more than one please continue pressing enter for each type.");
-//        ArrayList<String> inputUserPetHold = new ArrayList<>(30);
-//        ArrayList<String> inputUserPetHoldSound = new ArrayList<>(30);
-//        for(int i = 0; i<inputUser; i++) {
-//            inputUserPet = input.next();
-//            inputUserPetHold.add(inputUserPet);
-//            if(inputUserPet.equalsIgnoreCase("Dog")) {
-//                inputUserPetHoldSound.add(x.displaySpeak());
-//            } else if(inputUserPet.equalsIgnoreCase("Cat")){
-//                inputUserPetHoldSound.add(y.displaySpeak());
-//            } else if (inputUserPet.equalsIgnoreCase("Hamster")){
-//                inputUserPetHoldSound.add(v.displaySpeak());
-//            }
-//        }
-//        System.out.println(inputUserPetHold.toString());
-//        System.out.println(inputUserPetHoldSound);
-
-    }
-
     public String getName(){
         System.out.println(name);
         return this.name;
     }
-    public Integer getNumberOfPets(){return numberOfPet;}
-    public ArrayList<String> getNameOfPetsHold() {
+
+    public Integer getNumberOfPets(){return this.numberOfPet;}
+    public List<String> getNameOfPetsHold() {
         return pet;
     }
 
-    public ArrayList<String> getSoundHold(){
-        Dog x = new Dog();
-        Cat y = new Cat();
-        Hamster v = new Hamster();
-        ArrayList<String> userPetSound = new ArrayList<>(30);
 
-        return sound;
+    public void setHoldType(Scanner input) {
+        for(int i = 0; i<this.numberOfPet; i++) {
+            this.type = input.next();
+            this.sound.add(this.type);
+        }
     }
+
+   public String getType() {
+        return this.type;
+   }
 
 
    public  String displaySpeak() {
        return "";
    }
+
+   public String displayNameAndSepakByType(){
+        Dog dog = new Dog();
+        Cat cat = new Cat();
+        Hamster hamster = new Hamster();
+        StringBuilder str = new StringBuilder();
+        for(int i = 0; i<this.pet.size(); i++){
+            if(this.pet.get(i).equalsIgnoreCase("dog")){
+                str.append(this.sound.get(i));
+                str.append(",");
+                str.append(dog.displaySpeak());
+                str.append(" ");
+
+            }
+        }
+
+        for(int i = 0; i<this.pet.size(); i++){
+            if(this.pet.get(i).equalsIgnoreCase("cat")){
+                str.append("  ");
+                str.append(this.sound.get(i));
+                str.append(",");
+                str.append(cat.displaySpeak());
+            }
+        }
+
+        for(int i = 0; i<this.pet.size(); i++){
+            if(this.pet.get(i).equalsIgnoreCase("hamster")){
+                str.append("  ");
+                str.append(this.sound.get(i));
+                str.append(",");
+                str.append(hamster.displaySpeak());
+            }
+        }
+
+        System.out.println(str);
+
+        return this.displayNameandType = String.valueOf(str);
+   }
+
+
+
+
+   // for every pet type print the animal noise with the name
+
+
+
 }
